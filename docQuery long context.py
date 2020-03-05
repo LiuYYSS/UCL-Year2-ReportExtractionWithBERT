@@ -35,7 +35,7 @@ else:
 
 outputString = ""
 pageNum = 0
-while pageNum < 18:
+while pageNum < len(pages):
     print(pageNum)
     imgByteArr = io.BytesIO()
     pages[pageNum].save(imgByteArr, format=pages[pageNum].format)

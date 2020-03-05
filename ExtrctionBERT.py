@@ -1,11 +1,12 @@
 import io
 import json
 import os
-import sys
-from simpletransformers.question_answering import QuestionAnsweringModel
 import platform
-import requests
+import sys
+
 import pdf2image as pdf2image
+import requests
+from simpletransformers.question_answering import QuestionAnsweringModel
 
 
 def to_list(tensor):
@@ -38,7 +39,8 @@ outputString = ""
 while pageNum < len(pages):
     if prevNum != pageNum:
         pages[pageNum].show()
-    makeQues = input("making some questions? - T/F or skip reset pages and output current progress - S or jump to page - JUMP<page number>")
+    makeQues = input(
+        "making some questions? - T/F or skip reset pages and output current progress - S or jump to page - JUMP<page number>")
     if makeQues.upper()[0:4] == "JUMP":
         pageNum = int(makeQues[4:])
     if makeQues.upper() == "S":
@@ -47,7 +49,6 @@ while pageNum < len(pages):
         pageNum += 1
     if makeQues.upper() == 'T':
         if prevNum != pageNum:
-            outputString = ""
             imgByteArr = io.BytesIO()
             pages[pageNum].save(imgByteArr, format=pages[pageNum].format)
             imgByteArr = imgByteArr.getvalue()
@@ -72,9 +73,10 @@ while pageNum < len(pages):
 
         question = input("question:")
         to_predict = [{'context': outputString, 'qas': [{'question': question, 'id': '0'}]}]
-        print(to_predict)
 
         model = QuestionAnsweringModel('albert', 'ahotrod/albert_xxlargev1_squad2_512',
-                                       args={'max_seq_length': 512, "eval_batch_size": 3, "version_2_with_negative": True, 'reprocess_input_data': True, 'overwrite_output_dir': True, 'silent': True, "n_best_size":10})
+                                       args={'max_seq_length': 512, "eval_batch_size": 3,
+                                             "version_2_with_negative": True, 'reprocess_input_data': True,
+                                             'overwrite_output_dir': True, 'silent': True, "n_best_size": 10})
         res = model.predict(to_predict)
         print(res[0]['answer'])
