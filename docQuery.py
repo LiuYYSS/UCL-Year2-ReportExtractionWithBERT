@@ -74,7 +74,7 @@ while pageNum < len(pages):
         to_predict = [{'context': outputString, 'qas': [{'question': question, 'id': '0'}]}]
         print(to_predict)
 
-        #model = QuestionAnsweringModel('albert', 'ahotrod/albert_xxlargev1_squad2_512', args={'max_seq_length': 512, "eval_batch_size": 3, "version_2_with_negative": True, 'reprocess_input_data': True, 'overwrite_output_dir': True, 'silent': True})
+        model = QuestionAnsweringModel('albert', 'ahotrod/albert_xxlargev1_squad2_512', args={'max_seq_length': 512, "eval_batch_size": 3, "version_2_with_negative": True, 'reprocess_input_data': True, 'overwrite_output_dir': True, 'silent': True})
         res = model.predict(to_predict, 10)
         print(len(res))
         print(res[0]['answer'])

@@ -6,7 +6,7 @@ from simpletransformers.question_answering import QuestionAnsweringModel
 import platform
 import requests
 import pdf2image as pdf2image
-import docQuery_utils
+import Questions
 
 # ms cognitive service configs
 endpoint = 'https://uksouth.api.cognitive.microsoft.com/'
@@ -22,7 +22,7 @@ model = QuestionAnsweringModel('albert', 'ahotrod/albert_xxlargev1_squad2_512',
 projectPath = os.path.abspath(os.path.dirname(sys.argv[0]))
 inputPath = projectPath + os.path.sep + "input"
 
-#program configs
+# program configs
 nBestProbability = 0.1
 
 pdfs = []
@@ -68,32 +68,5 @@ for pdf in pdfs:
                     outputString += text + " "
         pageNum += 1
 
-    # Questions!
-    question = input("question:")
-    to_predict = [
-        {
-            'context': outputString,
-            'qas': [
-                {
-                    'id': "1",
-                    'is_impossible': False,
-                    'question': question,
-                    'answers': []
-                }
-            ]
-        }
-    ]
-    os.makedirs('data', exist_ok=True)
-    with open('data/train.json', 'w') as f:
-        json.dump(to_predict, f)
-    f.close()
-    allPrediction, nBestPrediction = model.eval_model('data/train.json')
-    print(allPrediction)
-    print(nBestPrediction)
-
-    # Extract answer
-    ansText = []
-    for Pred in nBestPrediction['1']:
-        if Pred['probability'] >= nBestProbability:
-            ansText.append(Pred['text'])
-    ansText = docQuery_utils.removeIncludePredictions(ansText)
+NGOName = None
+Questions.query(NGOName, model, outputString)
