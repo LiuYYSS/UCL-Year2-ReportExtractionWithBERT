@@ -37,6 +37,8 @@ for pdf in pdfs:
     outputString = ""
     pageNum = 0
 
+    NGOName = "community outreach burundi COB"
+
     if platform.system() == 'Windows':
         pathname = projectPath + os.path.sep + "poppler_win" + os.path.sep + "bin"
         pages = pdf2image.convert_from_path(pdf, 200, poppler_path=pathname, fmt="jpeg")
@@ -68,5 +70,5 @@ for pdf in pdfs:
                     outputString += text + " "
         pageNum += 1
 
-NGOName = None
-Questions.query(NGOName, model, outputString)
+    information = Questions.query(NGOName, model, outputString, nBestProbability)
+    print(information)

@@ -29,19 +29,20 @@ def getPredictions(context, questions, model, nBestProbability):
     bestPrediction, nBestPredictions = model.eval_model('data/train.json')
 
     # Extract answer
-    bestPredictionText = bestPrediction['1']
+    bestPredictionText = []
+    for i in range(len(bestPrediction)):
+        bestPredictionText.append(bestPrediction[str(i)])
     nBestAnswerPredictionsText = []
     nBestAnswerPredictionsProbability = []
-    for nBestPrediction in nBestPredictions:
+    for i in range(len(nBestPredictions)):
         nBestAnswerPredictionText = []
         nBestAnswerPredictionProbability = []
-        for BestPrediction in nBestPrediction['1']:
+        for BestPrediction in nBestPredictions[str(i)]:
             if BestPrediction['probability'] >= nBestProbability:
                 nBestAnswerPredictionText.append(BestPrediction['text'])
                 nBestAnswerPredictionProbability.append(BestPrediction['probability'])
         nBestAnswerPredictionsText.append(nBestAnswerPredictionText)
         nBestAnswerPredictionsProbability.append(nBestAnswerPredictionProbability)
-    nBestAnswerPredictionsText = removeIncludePredictions(nBestAnswerPredictionsText)
 
     return bestPredictionText, nBestAnswerPredictionsText, nBestAnswerPredictionsProbability
 
@@ -54,6 +55,3 @@ def getBestOneAnswer(allAnswers, allProbability, starts, ends):
             bestAnswer = allAnswers[i][0]
             bestProbability = allProbability[i][0]
     return bestAnswer
-
-def getBestMultiAnswer(allAnswers, allProbability, starts, ends):
-
