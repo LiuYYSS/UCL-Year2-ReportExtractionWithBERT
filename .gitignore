@@ -17,6 +17,8 @@ cache_dir/*
 poppler_win
 poppler_win/*
 tanzania-2018.pdf
+outputs
+outputs/*
 
 # User-specific files
 *.suo
@@ -294,3 +296,7 @@ __pycache__/
 # tools/
 
 # End of https://www.gitignore.io/api/aspnetcore
+input/966772306264698623132095.pdf
+outputs/nbest_predictions_test.json
+outputs/null_odds_test.json
+outputs/predictions_test.json

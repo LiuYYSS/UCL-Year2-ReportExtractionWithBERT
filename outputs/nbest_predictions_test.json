@@ -1,0 +1,130 @@
+{
+    "1": [
+        {
+            "text": "parents leading safe families",
+            "probability": 0.5300803015996133,
+            "start_logit": 8.37463092803955,
+            "end_logit": 7.468019962310791
+        },
+        {
+            "text": "Citibank awards program",
+            "probability": 0.3032256342968921,
+            "start_logit": 7.800918102264404,
+            "end_logit": 7.483181476593018
+        },
+        {
+            "text": "Jordan project 2",
+            "probability": 0.059680459210076406,
+            "start_logit": 6.799548149108887,
+            "end_logit": 6.859078884124756
+        },
+        {
+            "text": "Community Empowerment Program Engagement project",
+            "probability": 0.013516395464492154,
+            "start_logit": 5.306518077850342,
+            "end_logit": 6.867007732391357
+        },
+        {
+            "text": "Jordan project 2 Jordan River Community Empowerment",
+            "probability": 0.013332553339926874,
+            "start_logit": 6.799548149108887,
+            "end_logit": 5.360282897949219
+        },
+        {
+            "text": "Community Empowerment",
+            "probability": 0.01328628160328402,
+            "start_logit": 6.176182746887207,
+            "end_logit": 5.9801716804504395
+        },
+        {
+            "text": "Oppoftunities for Jordanians",
+            "probability": 0.010697387390323469,
+            "start_logit": 5.137662410736084,
+            "end_logit": 6.80195951461792
+        },
+        {
+            "text": "Citibank awards",
+            "probability": 0.008690546890837548,
+            "start_logit": 7.800918102264404,
+            "end_logit": 3.9309401512145996
+        },
+        {
+            "text": "Jordan River Child Safety Program",
+            "probability": 0.007295989754174334,
+            "start_logit": 5.408716678619385,
+            "end_logit": 6.14823055267334
+        },
+        {
+            "text": "Program Engagement project",
+            "probability": 0.005631852963509476,
+            "start_logit": 4.431053161621094,
+            "end_logit": 6.867007732391357
+        },
+        {
+            "text": "Community Empowerment Program Enhancing Access to ive ihoods & Emp oyment Oppoftunities for Jordanians",
+            "probability": 0.005209332840711132,
+            "start_logit": 4.41811466217041,
+            "end_logit": 6.80195951461792
+        },
+        {
+            "text": "the Jordan River Child Safety Program",
+            "probability": 0.005185469197782864,
+            "start_logit": 5.067252159118652,
+            "end_logit": 6.14823055267334
+        },
+        {
+            "text": "Jordan River Community Empowerment Program",
+            "probability": 0.0043822741699814476,
+            "start_logit": 5.8939361572265625,
+            "end_logit": 5.15325403213501
+        },
+        {
+            "text": "Community Empowerment Program",
+            "probability": 0.004065475880693577,
+            "start_logit": 5.732130527496338,
+            "end_logit": 5.240022659301758
+        },
+        {
+            "text": "Makani",
+            "probability": 0.0038955850160894336,
+            "start_logit": 6.515074253082275,
+            "end_logit": 4.414391994476318
+        },
+        {
+            "text": "Jordan River Community Empowerment Program Engagement project",
+            "probability": 0.0027804272398334025,
+            "start_logit": 3.725219249725342,
+            "end_logit": 6.867007732391357
+        },
+        {
+            "text": "apprenticeship program,",
+            "probability": 0.0025857415693274657,
+            "start_logit": 3.9055705070495605,
+            "end_logit": 6.6140642166137695
+        },
+        {
+            "text": "Community Empowerment Program Engagement project Irbid,",
+            "probability": 0.002228698898054374,
+            "start_logit": 5.306518077850342,
+            "end_logit": 5.0645222663879395
+        },
+        {
+            "text": "River Community Empowerment Program Engagement project",
+            "probability": 0.0022058697047804636,
+            "start_logit": 3.493736505508423,
+            "end_logit": 6.867007732391357
+        },
+        {
+            "text": "Makani is an all encompassing initiative that targets community members of all ages, engaging them in activities designed to improve their social and emotional well-being. Based on local community findings and needs assessments, Makani",
+            "probability": 0.0020232934234682086,
+            "start_logit": 6.515074253082275,
+            "end_logit": 3.75927472114563
+        },
+        {
+            "text": "",
+            "probability": 4.295461479547412e-07,
+            "start_logit": 1.0739718675613403,
+            "end_logit": 0.7428691387176514
+        }
+    ]
+}
