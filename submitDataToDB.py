@@ -13,8 +13,11 @@ def submit(data):
 	if ngo_name in get_existing_ngos():
 		ngo_id = get_ngo_id(ngo_name)
 	else:
-		ngo_id = create_new_ngo
+		ngo_id = create_new_ngo()
 
+def create_new_ngo():
+	#todo
+	return -1
 
 def get_existing_ngos():
 	with connection.cursor() as cursor:
