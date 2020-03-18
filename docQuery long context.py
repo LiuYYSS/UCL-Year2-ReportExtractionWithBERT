@@ -71,4 +71,4 @@ for pdf in pdfs:
         pageNum += 1
 
     information = Questions.query(NGOName, model, outputString, nBestProbability)
-    print(information)
+    print(information.information)
