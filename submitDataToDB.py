@@ -12,15 +12,18 @@ connection = pymysql.connect(host='ancssc-db.mysql.database.azure.com',
 def submit(data, pdf_name):
 	ngo_name = data["ngo"]["NGO_NAME"]
 	ngo_id = get_ngo_id(ngo_name)
-
 	data["ngo"]["NGO_ID"] = ngo_id
 	data["ngo"]["PDF_NAME"] = pdf_name
+	data["ngo"].pop("NGO_NAME", None)
 	ngo_data_id = submit_data("ngo_data", data["ngo"])
 
 	submit_data("sponsors", data["sponsors"])
 	submit_data("ngo_staff", data["ngo_staff"])
 
 	submit_project_data(data, ngo_data_id)
+
+
+
 
 
 def submit_data(table_name, table_data):
@@ -84,19 +87,9 @@ def submit_project_related_table(table_name, data, i, proj_id):
 	s["PROJECT_ID"] = proj_id
 	submit_data(table_name, s)
 
-n = submit_data("ngo_data", {
-	"NGO_SINCE": "4 april"
-})
-
-submit_project_data({
-	"projects": {
-		"PROJECT_DESCRIPTION": ["", "test", ""],
-		"PROJECT_START_DATE": ["", "3", "test"]
-	},
-	"project_geo_info": {
-		"PROJECT_ADDRESS": ["a", "b", "c"]
-	}
-}, n)
+# n = submit_data("ngo_data", {
+# 	"NGO_SINCE": "4 april"
+# })
 
 
 
@@ -113,9 +106,12 @@ def get_ngo_id(ngo_name):
 			sql = "INSERT INTO `ngo` (`NAME`) VALUES (%s)"
 			cursor.execute(sql, (ngo_name))
 		connection.commit()
+	else:
+		return result["ID"]
+
 
 	result = fetch_ngo_id_from_db(ngo_name)
-	return result
+	return result["ID"]
 
 
 
@@ -163,3 +159,18 @@ def create_new_ngo():
 #
 # 	return result
 # get_existing_ngos()
+
+
+
+submit({
+	"projects": {
+		"PROJECT_DESCRIPTION": ["", "test", ""],
+		"PROJECT_START_DATE": ["", "3", "test"]
+	},
+	"project_geo_info": {
+		"PROJECT_ADDRESS": ["a", "b", "c"]
+	},
+	"ngo": {
+		"NGO_NAME" : "example ngo"
+	}
+}, "pdf_name")
