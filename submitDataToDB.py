@@ -3,7 +3,7 @@ import pickle
 
 class submitDataToDB:
 	connection = None
-	def __init(self):
+	def __init__(self):
 		self.create_connection()
 
 
