@@ -161,17 +161,3 @@ def create_new_ngo():
 # 	return result
 # get_existing_ngos()
 
-
-
-submit({
-	"projects": {
-		"PROJECT_DESCRIPTION": ["", "test", ""],
-		"PROJECT_START_DATE": ["", "3", "test"]
-	},
-	"project_geo_info": {
-		"PROJECT_ADDRESS": ["a", "b", "c"]
-	},
-	"ngo": {
-		"NGO_NAME" : "example ngo"
-	}
-}, "pdf_name")
