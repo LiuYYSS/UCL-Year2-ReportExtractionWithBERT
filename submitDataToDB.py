@@ -12,13 +12,13 @@ connection = pymysql.connect(host='ancssc-db.mysql.database.azure.com',
 def submit(data, pdf_name):
 	ngo_name = data["ngo"]["NGO_NAME"]
 	ngo_id = get_ngo_id(ngo_name)
-	data["ngo"]["NGO_ID"] = ngo_id
+	# data["ngo"]["NGO_ID"] = ngo_id
 	data["ngo"]["PDF_NAME"] = pdf_name
 	data["ngo"].pop("NGO_NAME", None)
-	ngo_data_id = submit_data("ngo_data", data["ngo"])
+	ngo_data_id = submit_data("ngo_data", data["ngo"], ngo_id)
 
-	submit_data("sponsors", data["sponsors"])
-	submit_data("ngo_staff", data["ngo_staff"])
+	submit_data("sponsors", data["sponsors"], ngo_data_id)
+	submit_data("ngo_staff", data["ngo_staff"], ngo_data_id)
 
 	submit_project_data(data, ngo_data_id)
 
@@ -26,7 +26,8 @@ def submit(data, pdf_name):
 
 
 
-def submit_data(table_name, table_data):
+def submit_data(table_name, table_data, ngo_data_id):
+	table_data["NGO_ID"] = ngo_data_id
 	with connection.cursor() as cursor:
 		# Create a new record
 		fields = "( "
