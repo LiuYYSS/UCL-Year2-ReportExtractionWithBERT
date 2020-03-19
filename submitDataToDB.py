@@ -24,15 +24,26 @@ class submitDataToDB:
 	def submit(self, d, pdf_name):
 
 
-		data = d.information
+		# data = d.information
 		ngo_name = data["ngo"]["NGO_NAME"]
 		ngo_id = self.get_ngo_id(ngo_name)
 		# data["ngo"]["NGO_ID"] = ngo_id
 		data["ngo"]["PDF_NAME"] = pdf_name
 		data["ngo"].pop("NGO_NAME", None)
+		data["ngo"].pop("SPONSOR_NAME", None)
 		ngo_data_id = self.submit_data("ngo_data", data["ngo"], ngo_id)
 
 		self.submit_data("sponsors", data["sponsors"], ngo_data_id)
+
+		staff = ""
+
+		for r in data["ngo_staff"]["PERSON_NAME"]:
+			if staff == "":
+				staff = r
+			else:
+				staff = staff + ", " + r
+		data["ngo_staff"]["PERSON_NAME"] = staff
+
 		self.submit_data("ngo_staff", data["ngo_staff"], ngo_data_id)
 
 		self.submit_project_data(data, ngo_data_id)
@@ -146,3 +157,34 @@ class submitDataToDB:
 
 
 
+s = submitDataToDB()
+data = {
+	'ngo': {
+		"NGO_NAME": "example_ngo"
+	},
+	'projects': {
+		"PROJECT_DESCRIPTION": []
+	},
+	'sponsors': {
+
+	},
+	'ngo_staff': {
+
+	},
+	'project_geo_info': {
+
+	},
+	'classifications': {
+
+	},
+	'project_impact': {
+
+	},
+	'project_finance': {
+
+	}
+
+
+}
+
+s.submit(data, "example_pdf")
