@@ -125,9 +125,9 @@ def query(NGOName, model, context, nBestProbability):
 
         for i in range(len(bestPredictionText)):
             if i % len(Questions) == 0:
-                content.information["project_finance"]["PERIOD_START"] = bestPredictionText[i]
+                content.information["project_finance"]["PERIOD_START"].append(bestPredictionText[i])
             elif i % len(Questions) == 1:
-                content.information["project_finance"]["PERIOD_END"] = bestPredictionText[i]
+                content.information["project_finance"]["PERIOD_END"].append(bestPredictionText[i])
     return content
 
 
