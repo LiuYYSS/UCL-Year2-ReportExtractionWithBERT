@@ -7,6 +7,9 @@ class submitDataToDB:
 		self.create_connection()
 
 
+	def close_connection(self):
+		self.connection.close()
+
 
 	def create_connection(self):
 		self.connection = pymysql.connect(host='ancssc-db.mysql.database.azure.com',

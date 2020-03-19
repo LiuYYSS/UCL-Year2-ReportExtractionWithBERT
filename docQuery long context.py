@@ -79,7 +79,9 @@ for pdf in pdfs:
         pageNum += 1
 
     information = Questions.query(NGOName, model, outputString, nBestProbability)
-    submitDataToDB.submit(information, pdf)
+    s = submitDataToDB.submitDataToDB()
+    s.submit(information, pdf)
     pickle_out = open("dict.pickle", "wb")
     pickle.dump(information, pickle_out)
     pickle_out.close()
+    s.close_connection()
