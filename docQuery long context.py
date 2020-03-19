@@ -79,9 +79,11 @@ for pdf in pdfs:
         pageNum += 1
 
     information = Questions.query(NGOName, model, outputString, nBestProbability)
+    try:
+        with open('data.json', 'w') as f:
+            json.dump(information, f)
+    except:
+        print("An exception occurred")
     s = submitDataToDB.submitDataToDB()
     s.submit(information, pdf)
-    pickle_out = open("dict.pickle", "wb")
-    pickle.dump(information, pickle_out)
-    pickle_out.close()
     s.close_connection()

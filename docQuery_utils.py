@@ -11,6 +11,7 @@ def removeIncludePredictions(predictions):
 
 
 def getPredictions(context, questions, model, nBestProbability):
+    print(questions)
     qasJSONs = []
     for i in range(len(questions)):
         qasJSON = {

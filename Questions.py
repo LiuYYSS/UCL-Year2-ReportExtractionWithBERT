@@ -37,6 +37,7 @@ def query(NGOName, model, context, nBestProbability):
 
         # NGO Programme
         content.information["ngo"]["PROJECT_TITLE"] = nBestAnswerPredictionsText[5]
+        content.information["projects"]["PROJECT_TITLE"] = nBestAnswerPredictionsText[5]
 
         content.information["sponsors"]["SPONSOR_NAME"] = bestPredictionText[7]
 
@@ -55,7 +56,7 @@ def query(NGOName, model, context, nBestProbability):
                              "How much money did PNAME receive?"]
                 for i in range(len(Questions)):
                     Questions[i] = Questions[i].replace("PNAME", project)
-                projectQuestions+=Questions
+                projectQuestions += Questions
 
         bestPredictionText, nBestAnswerPredictionsText, nBestAnswerPredictionsProbability = docQuery_utils.getPredictions(
             context, projectQuestions, model, nBestProbability)
@@ -101,7 +102,7 @@ def query(NGOName, model, context, nBestProbability):
             Questions = ["What is PERSON’s role?", "What department does PERSON work in", "What are PERSON’s contact details"]
             for i in range(len(Questions)):
                 Questions[i] = Questions[i].replace("PERSON", staff)
-            staffQuestions.append(Questions)
+            staffQuestions += Questions
         bestPredictionText, nBestAnswerPredictionsText, nBestAnswerPredictionsProbability = docQuery_utils.getPredictions(
             context, staffQuestions, model, nBestProbability)
         for i in range(len(bestPredictionText)):
@@ -113,16 +114,19 @@ def query(NGOName, model, context, nBestProbability):
                 content.information["ngo_staff"]["EMAIL"] = bestPredictionText[i]
 
         financeQuestions = []
-        for currency in content.information["project_finance"]["CURRENCY"]:
-            if currency is not None and currency != "":
+        for i in range(len(content.information["project_finance"]["CURRENCY"])):
+            if content.information["project_finance"]["CURRENCY"][i] is not None and content.information["project_finance"]["CURRENCY"][i] != "":
                 Questions = ["When did PNAME receive MONEY?", "When did PNAME stop receiving MONEY?"]
                 for i in range(len(Questions)):
-                    Questions[i] = Questions[i].replace("MONEY", currency)
+                    Questions[i] = Questions[i].replace("MONEY", content.information["project_finance"]["CURRENCY"][i])
+                    Questions[i] = Questions[i].replace("PNAME", content.information["ngo"]["PROJECT_TITLE"][i])
                 financeQuestions += Questions
 
         bestPredictionText, nBestAnswerPredictionsText, nBestAnswerPredictionsProbability = docQuery_utils.getPredictions(
             context, financeQuestions, model, nBestProbability)
 
+        content.information["project_finance"]["PERIOD_START"] = []
+        content.information["project_finance"]["PERIOD_END"] = []
         for i in range(len(bestPredictionText)):
             if i % len(Questions) == 0:
                 content.information["project_finance"]["PERIOD_START"].append(bestPredictionText[i])
