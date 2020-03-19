@@ -7,6 +7,8 @@ import platform
 import requests
 import pdf2image as pdf2image
 import Questions
+import getDataFromDB
+import submitDataToDB
 
 # ms cognitive service configs
 endpoint = 'https://uksouth.api.cognitive.microsoft.com/'
@@ -37,7 +39,10 @@ for pdf in pdfs:
     outputString = ""
     pageNum = 0
 
-    NGOName = "community outreach burundi COB"
+    NGOName = getDataFromDB(pdf)
+
+    if NGOName is "":
+        continue
 
     if platform.system() == 'Windows':
         pathname = projectPath + os.path.sep + "poppler_win" + os.path.sep + "bin"
@@ -71,4 +76,4 @@ for pdf in pdfs:
         pageNum += 1
 
     information = Questions.query(NGOName, model, outputString, nBestProbability)
-    print(information.information)
+    submitDataToDB.submit(information, pdf)
