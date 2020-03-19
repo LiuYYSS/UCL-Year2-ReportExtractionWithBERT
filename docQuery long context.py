@@ -2,13 +2,15 @@ import io
 import json
 import os
 import sys
-from simpletransformers.question_answering import QuestionAnsweringModel
+from question_answering_model import QuestionAnsweringModel
 import platform
 import requests
 import pdf2image as pdf2image
 import Questions
 import getDataFromDB
 import submitDataToDB
+
+import pickle
 
 # ms cognitive service configs
 endpoint = 'https://uksouth.api.cognitive.microsoft.com/'
@@ -17,8 +19,8 @@ subscription_key = 'ffcc4bbd174c4b6e97d0a945aebf8b98'
 
 # transformer configs
 model = QuestionAnsweringModel('albert', 'ahotrod/albert_xxlargev1_squad2_512',
-                               args={'max_seq_length': 512, "eval_batch_size": 3, "version_2_with_negative": True,
-                                     'reprocess_input_data': True, 'overwrite_output_dir': True, 'silent': True})
+                               args={'max_seq_length': 512, "eval_batch_size": 8, "version_2_with_negative": True,
+                                     'reprocess_input_data': True, 'overwrite_output_dir': True, 'silent': True,})
 
 # input dir configs
 projectPath = os.path.abspath(os.path.dirname(sys.argv[0]))
@@ -38,10 +40,11 @@ for pdf in pdfs:
     pages = None
     outputString = ""
     pageNum = 0
-
-    NGOName = getDataFromDB(pdf)
+    address = pdf.split(os.sep)
+    NGOName = getDataFromDB.getNGOName(address[-1])['NGO_NAME']
 
     if NGOName is "":
+        print("null name")
         continue
 
     if platform.system() == 'Windows':
@@ -77,3 +80,6 @@ for pdf in pdfs:
 
     information = Questions.query(NGOName, model, outputString, nBestProbability)
     submitDataToDB.submit(information, pdf)
+    pickle_out = open("dict.pickle", "wb")
+    pickle.dump(information, pickle_out)
+    pickle_out.close()
