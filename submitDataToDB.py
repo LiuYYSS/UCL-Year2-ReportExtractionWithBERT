@@ -1,4 +1,5 @@
 import pymysql
+import pickle
 connection = pymysql.connect(host='ancssc-db.mysql.database.azure.com',
 							 user='ancssc@ancssc-db',
 							 password='819UiC@Uj&$Z^GY',
@@ -9,7 +10,8 @@ connection = pymysql.connect(host='ancssc-db.mysql.database.azure.com',
 
 
 
-def submit(data, pdf_name):
+def submit(d, pdf_name):
+	data = d.information
 	ngo_name = data["ngo"]["NGO_NAME"]
 	ngo_id = get_ngo_id(ngo_name)
 	# data["ngo"]["NGO_ID"] = ngo_id
@@ -160,4 +162,16 @@ def create_new_ngo():
 #
 # 	return result
 # get_existing_ngos()
+
+def get_pickle(path):
+	try:
+		with open(path, 'rb') as handle:
+			p = pickle.load(handle)
+
+		return p
+	except FileNotFoundError:
+		return None
+
+
+
 
