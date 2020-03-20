@@ -22,15 +22,13 @@ class submitDataToDB:
 
 
 	def submit(self, d, pdf_name):
-
-
-		# data = d.information
+		data = d.information
 		ngo_name = data["ngo"]["NGO_NAME"]
 		ngo_id = self.get_ngo_id(ngo_name)
 		# data["ngo"]["NGO_ID"] = ngo_id
 		data["ngo"]["PDF_NAME"] = pdf_name
 		data["ngo"].pop("NGO_NAME", None)
-		data["ngo"].pop("SPONSOR_NAME", None)
+		data["ngo"].pop("PROJECT_TITLE", None)
 		ngo_data_id = self.submit_data("ngo_data", data["ngo"], ngo_id)
 
 		self.submit_data("sponsors", data["sponsors"], ngo_data_id)
@@ -53,12 +51,13 @@ class submitDataToDB:
 
 
 	def submit_data(self, table_name, table_data, ngo_data_id):
-		table_data["NGO_ID"] = ngo_data_id
+		if ngo_data_id is not None:
+			table_data["NGO_ID"] = ngo_data_id
 		with self.connection.cursor() as cursor:
 			# Create a new record
-			fields = "( "
+			fields = " ( "
 			for item in table_data:
-				if fields != "( ":
+				if fields != " ( ":
 					fields += ", " + "`"+item+"`"
 				else:
 					fields += " `"+item+"`"
@@ -66,13 +65,16 @@ class submitDataToDB:
 
 			data = "( "
 			for item in table_data:
+
 				if data != "( ":
 					data += ", " + "'"+str(table_data[item])+"'"
 				else:
 					data += " '"+str(table_data[item])+"'"
+
 			data += ")"
 
 			sql = "INSERT INTO " + table_name +  fields + " VALUES " + data + " "
+			print(sql)
 			cursor.execute(sql)
 		self.connection.commit()
 
@@ -97,11 +99,11 @@ class submitDataToDB:
 			for field in data["projects"]:
 				s[field] = data["projects"][field][i]
 			s["NGO_ID"] = ngo_data_id
-			ids.append(self.submit_data("projects", s))
+			ids.append(self.submit_data("projects", s, ngo_data_id))
 
 
 		for i, proj_id in enumerate(ids):
-			self.submit_project_related_table("project_geo_info", data, i , proj_id)
+			self.submit_project_related_table("project_geo_info", data, i, proj_id)
 			self.submit_project_related_table("classifications", data, i, proj_id)
 			self.submit_project_related_table("project_impact", data, i, proj_id)
 			self.submit_project_related_table("project_finance", data, i, proj_id)
@@ -112,7 +114,7 @@ class submitDataToDB:
 		for field in data[table_name]:
 			s[field] = data[table_name][field][i]
 		s["PROJECT_ID"] = proj_id
-		self.submit_data(table_name, s)
+		self.submit_data(table_name, s, None)
 
 	# n = submit_data("ngo_data", {
 	# 	"NGO_SINCE": "4 april"
@@ -157,34 +159,3 @@ class submitDataToDB:
 
 
 
-s = submitDataToDB()
-data = {
-	'ngo': {
-		"NGO_NAME": "example_ngo"
-	},
-	'projects': {
-		"PROJECT_DESCRIPTION": []
-	},
-	'sponsors': {
-
-	},
-	'ngo_staff': {
-
-	},
-	'project_geo_info': {
-
-	},
-	'classifications': {
-
-	},
-	'project_impact': {
-
-	},
-	'project_finance': {
-
-	}
-
-
-}
-
-s.submit(data, "example_pdf")

@@ -81,9 +81,10 @@ for pdf in pdfs:
     information = Questions.query(NGOName, model, outputString, nBestProbability)
     try:
         with open('data.json', 'w') as f:
-            json.dump(information, f)
+            json.dump(information.information, f)
     except:
         print("An exception occurred")
+
     s = submitDataToDB.submitDataToDB()
     s.submit(information, pdf)
     s.close_connection()
