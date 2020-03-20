@@ -65,9 +65,10 @@ class submitDataToDB:
 
 			data = "( "
 			for item in table_data:
-				table_data[item] = table_data[item].replace("'", "")
-				table_data[item] = table_data[item].replace(",", "")
-				table_data[item] = table_data[item].replace("\"", "")
+				if isinstance(table_data[item], str):
+					table_data[item] = table_data[item].replace("'", "")
+					table_data[item] = table_data[item].replace(",", "")
+					table_data[item] = table_data[item].replace("\"", "")
 				if data != "( ":
 					data += ", " + "'"+str(table_data[item])+"'"
 				else:
