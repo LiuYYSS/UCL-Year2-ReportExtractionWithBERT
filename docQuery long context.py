@@ -42,7 +42,10 @@ for pdf in pdfs:
     outputString = ""
     pageNum = 0
     address = pdf.split(os.sep)
-    NGOName = getDataFromDB.getNGOName(address[-1])['NGO_NAME']
+    db = getDataFromDB.getDataFromDB()
+    NGOName = db.getNGOName(address[-1])['NGO_NAME']
+    db.close_connection()
+
 
     if NGOName is "":
         print("null name")
