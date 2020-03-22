@@ -37,6 +37,7 @@ for filename in os.listdir(inputPath):
         continue
 
 for pdf in pdfs:
+    print("Extracting from " + pdf)
     pages = None
     outputString = ""
     pageNum = 0
@@ -79,12 +80,13 @@ for pdf in pdfs:
         pageNum += 1
 
     information = Questions.query(NGOName, model, outputString, nBestProbability)
-    try:
-        with open('data.json', 'w') as f:
-            json.dump(information.information, f)
-    except:
-        print("An exception occurred")
+    # try:
+    #     with open('data.json', 'w') as f:
+    #         json.dump(information.information, f)
+    # except:
+    #     print("An exception occurred")
 
     s = submitDataToDB.submitDataToDB()
+    print("!! Submitting " + pdf + " to database !!")
     s.submit(information, pdf)
     s.close_connection()
