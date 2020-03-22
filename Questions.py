@@ -46,7 +46,7 @@ def query(NGOName, model, context, nBestProbability):
         # Project Part
         projectQuestions = []
         for project in content.information["ngo"]["PROJECT_TITLE"]:
-            if project is not None and project != "":
+            if project is not None:
                 Questions = ["What is PNAME?", "When did PNAME start?",
                              "When will PNAME finish?",
                              "What is the status of PNAME?",
@@ -115,7 +115,7 @@ def query(NGOName, model, context, nBestProbability):
 
         financeQuestions = []
         for i in range(len(content.information["project_finance"]["CURRENCY"])):
-            if content.information["project_finance"]["CURRENCY"][i] is not None and content.information["project_finance"]["CURRENCY"][i] != "":
+            if content.information["project_finance"]["CURRENCY"][i] is not None:
                 Questions = ["When did PNAME receive MONEY?", "When did PNAME stop receiving MONEY?"]
                 for i in range(len(Questions)):
                     Questions[i] = Questions[i].replace("MONEY", content.information["project_finance"]["CURRENCY"][i])
@@ -132,6 +132,8 @@ def query(NGOName, model, context, nBestProbability):
                 content.information["project_finance"]["PERIOD_START"].append(bestPredictionText[i])
             elif i % len(Questions) == 1:
                 content.information["project_finance"]["PERIOD_END"].append(bestPredictionText[i])
+
+
     return content
 
 

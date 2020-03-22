@@ -9,6 +9,11 @@ content = Questions.reportContent()
 content.information = information
 pdf = "F://reportQuery//input//access_to_justice_2018_final_report.pdf"
 
+content.information["project_finance"]["PERIOD_START"].append("")
+content.information["project_finance"]["PERIOD_START"].append("")
+content.information["project_finance"]["PERIOD_END"].append("")
+content.information["project_finance"]["PERIOD_END"].append("")
+
 s = submitDataToDB.submitDataToDB()
 s.submit(content, pdf)
 s.close_connection()
