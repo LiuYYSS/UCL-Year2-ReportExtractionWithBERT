@@ -1,5 +1,5 @@
 import pymysql
-
+import os
 class getDataFromDB:
 	connection = None
 
@@ -54,4 +54,26 @@ class getDataFromDB:
 			data.append(r['PDF_NAME'])
 
 		return data
+
+
+	def getCompletedReports(self):
+
+		with self.connection.cursor() as cursor:
+			# Create a new record
+
+			sql = "SELECT `PDF_NAME` FROM `ngo_data`"
+			cursor.execute(sql)
+			result = cursor.fetchall()
+		data = []
+		for r in result:
+			data.append(r['PDF_NAME'])
+
+
+		final_data = []
+		for item in data:
+			address = item.split(os.sep)
+			final_data.append(address[-1])
+
+
+		return final_data
 
