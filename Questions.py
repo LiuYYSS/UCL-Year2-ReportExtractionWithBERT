@@ -112,21 +112,15 @@ def query(NGOName, model, context, nBestProbability):
                 content.information["ngo_staff"]["DEPARTMENT"] = bestPredictionText[i]
             elif i % len(Questions) == 2:
                 content.information["ngo_staff"]["EMAIL"] = bestPredictionText[i]
-        print(content.information)
+        
+        # Finance
         financeQuestions = []
         for i in range(len(content.information["project_finance"]["CURRENCY"])):
             if content.information["project_finance"]["CURRENCY"][i] is not None:
                 Questions = ["When did PNAME receive MONEY?", "When did PNAME stop receiving MONEY?"]
-                for i in range(len(Questions)):
-                    print("----------------")
-                    print(i)
-                    print(content.information["project_finance"]["CURRENCY"])
-
-
-
-
-                    Questions[i] = Questions[i].replace("MONEY", content.information["project_finance"]["CURRENCY"][i])
-                    Questions[i] = Questions[i].replace("PNAME", content.information["ngo"]["PROJECT_TITLE"][i])
+                for j in range(len(Questions)):
+                    Questions[j] = Questions[j].replace("MONEY", content.information["project_finance"]["CURRENCY"][i])
+                    Questions[j] = Questions[j].replace("PNAME", content.information["ngo"]["PROJECT_TITLE"][i])
                 financeQuestions += Questions
 
         bestPredictionText, nBestAnswerPredictionsText, nBestAnswerPredictionsProbability = docQuery_utils.getPredictions(
