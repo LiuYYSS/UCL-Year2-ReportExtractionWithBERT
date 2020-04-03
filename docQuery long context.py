@@ -14,8 +14,8 @@ import pickle
 
 # ms cognitive service configs
 endpoint = 'https://uksouth.api.cognitive.microsoft.com/'
-ocr_url = 'https://uksouth.api.cognitive.microsoft.com/vision/v2.1/ocr'
-subscription_key = 'ffcc4bbd174c4b6e97d0a945aebf8b98'
+ocr_url = endpoint + 'vision/v2.1/ocr'
+subscription_key = ''
 
 # transformer configs
 model = QuestionAnsweringModel('albert', 'ahotrod/albert_xxlargev1_squad2_512',
